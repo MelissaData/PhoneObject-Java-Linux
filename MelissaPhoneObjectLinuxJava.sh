@@ -42,7 +42,7 @@ while [ $# -gt 0 ] ; do
 done
 
 # ######################### Config ###########################
-RELEASE_VERSION='2023.06'
+RELEASE_VERSION='2023.07'
 ProductName="DQ_PHONE_DATA"
 
 # Uses the location of the .sh file 
@@ -70,6 +70,20 @@ Config_Compiler="GCC48"
 Config_Architecture="64BIT"
 Config_Type="BINARY"
 
+Wrapper_FileName="libmdPhoneJavaWrapper.so"
+Wrapper_ReleaseVersion=$RELEASE_VERSION
+Wrapper_OS="LINUX"
+Wrapper_Compiler="JAVA"
+Wrapper_Architecture="64BIT"
+Wrapper_Type="INTERFACE"
+
+Com_FileName="mdPhone_JavaCode.zip"
+Com_ReleaseVersion=$RELEASE_VERSION
+Com_OS="ANY"
+Com_Compiler="ANY"
+Com_Architecture="ANY"
+Com_Type="DATA"
+
 # ######################## Functions #########################
 DownloadDataFiles()
 {
@@ -94,14 +108,14 @@ DownloadSO()
     # Check for quiet mode
     if [ $quiet == "true" ];
     then
-        ./MelissaUpdater/MelissaUpdater file --filename $Config_FileName --release_version $Config_ReleaseVersion --license $1 --os $Config_OS --compiler $Config_Compiler --architecture $Config_Architecture --type $Config_Type --target_directory $BuildPath &> /dev/null
+        ./MelissaUpdater/MelissaUpdater file --filename $Config_FileName --release_version $Config_ReleaseVersion --license $1 --os $Config_OS --compiler $Config_Compiler --architecture $Config_Architecture --type $Config_Type --target_directory $ProjectPath &> /dev/null
         if [ $? -ne 0 ];
         then
             printf "\nCannot run Melissa Updater. Please check your license string!\n"
             exit 1
         fi
     else
-        ./MelissaUpdater/MelissaUpdater file --filename $Config_FileName --release_version $Config_ReleaseVersion --license $1 --os $Config_OS --compiler $Config_Compiler --architecture $Config_Architecture --type $Config_Type --target_directory $BuildPath 
+        ./MelissaUpdater/MelissaUpdater file --filename $Config_FileName --release_version $Config_ReleaseVersion --license $1 --os $Config_OS --compiler $Config_Compiler --architecture $Config_Architecture --type $Config_Type --target_directory $ProjectPath 
         if [ $? -ne 0 ];
         then
             printf "\nCannot run Melissa Updater. Please check your license string!\n"
@@ -110,6 +124,67 @@ DownloadSO()
     fi
     
     printf "Melissa Updater finished downloading $Config_FileName!\n"
+}
+
+DownloadWrappers() 
+{    
+    # Check for quiet mode
+    if [ $quiet == "true" ];
+    then
+        # Download the wrapper
+        ./MelissaUpdater/MelissaUpdater file --filename $Wrapper_FileName --release_version $Wrapper_ReleaseVersion --license $1 --os $Wrapper_OS --compiler $Wrapper_Compiler --architecture $Wrapper_Architecture --type $Wrapper_Type --target_directory $ProjectPath &> /dev/null
+        if [ $? -ne 0 ];
+        then
+            printf "\nCannot run Melissa Updater. Please check your license string!\n"
+            exit 1
+        fi
+
+        # Download the com zip
+        ./MelissaUpdater/MelissaUpdater file --filename $Com_FileName --release_version $Com_ReleaseVersion --license $1 --os $Com_OS --compiler $Com_Compiler --architecture $Com_Architecture --type $Com_Type --target_directory $ProjectPath &> /dev/null
+        if [ $? -ne 0 ];
+        then
+            printf "\nCannot run Melissa Updater. Please check your license string!\n"
+            exit 1
+        fi
+    else
+        #Download the wrapper
+        ./MelissaUpdater/MelissaUpdater file --filename $Wrapper_FileName --release_version $Wrapper_ReleaseVersion --license $1 --os $Wrapper_OS --compiler $Wrapper_Compiler --architecture $Wrapper_Architecture --type $Wrapper_Type --target_directory $ProjectPath 
+        if [ $? -ne 0 ];
+        then
+            printf "\nCannot run Melissa Updater. Please check your license string!\n"
+            exit 1
+        fi
+
+        # Download the com zip
+        ./MelissaUpdater/MelissaUpdater file --filename $Com_FileName --release_version $Com_ReleaseVersion --license $1 --os $Com_OS --compiler $Com_Compiler --architecture $Com_Architecture --type $Com_Type --target_directory $ProjectPath 
+        if [ $? -ne 0 ];
+        then
+            printf "\nCannot run Melissa Updater. Please check your license string!\n"
+            exit 1
+        fi
+    fi
+    
+    printf "Melissa Updater finished downloading $Wrapper_FileName!\n"
+
+    printf "Melissa Updater finished downloading $Com_FileName!\n"
+
+    # Check for the zip folder and extract from the zip folder if it was downloaded
+    if [ ! -f "$ProjectPath/mdPhone_JavaCode.zip" ];
+    then
+        printf "mdPhone_JavaCode.zip not found.\n"
+        printf "Aborting program, see above.\n"
+
+        exit 1
+    else
+        if [ ! -d "$ProjectPath/com" ];
+        then
+            unzip "$ProjectPath/mdPhone_JavaCode.zip" -d "$ProjectPath"
+        else
+            rm -r "$ProjectPath/com"
+
+            unzip "$ProjectPath/mdPhone_JavaCode.zip" -d "$ProjectPath"
+        fi
+    fi
 }
 
 CheckSOs() 
@@ -159,6 +234,9 @@ DownloadDataFiles $license      # comment out this line if using DQS Release
 
 # Download SO(s)
 DownloadSO $license 
+
+# Download wrapper and com folder
+DownloadWrappers $license
 
 # Check if all SO(s) have been downloaded. Exit script if missing
 printf "\nDouble checking SO file(s) were downloaded...\n"

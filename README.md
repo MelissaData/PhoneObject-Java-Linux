@@ -1,8 +1,6 @@
 # Melissa Phone Object Linux Java
 
-
 ## Purpose
-
 This code showcases the Melissa Phone Object using Java.
 
 Please feel free to copy or embed this code to your own project. Happy coding!
@@ -11,7 +9,7 @@ For the latest Melissa Phone Object release notes, please visit: https://release
 
 The console will ask the user for:
 
-- Phone Number
+- Phone 
 
 And return 
 
@@ -22,16 +20,14 @@ And return
 - State
 - Latitude
 - Longitude
-- TimeZone
-- ResultCodes
+- Time Zone
+- Result Codes
 
 ----------------------------------------
 
 ## Tested Environments
-
-- Linux 64-bit Java 19.0.2
-- Ubuntu 20.04.05 LTS
-- Melissa data files for 2023-06
+- Linux 64-bit Java 19.0.2, Ubuntu 20.04.05 LTS
+- Melissa data files for 2023-07
 
 ----------------------------------------
 
@@ -55,15 +51,14 @@ This file needs to be added as a Project Dependency.  This wrapper will need to 
 ----------------------------------------
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
-This project is compatible with Java 19
+
+This project is compatible with Java 19.
 
 #### Install Java
-
 Before starting, make sure that Java has been correctly installed on your machine and your environment paths are configured. 
 
 You may find detailed instructions here:
 https://javahelps.com/install-oracle-jdk-19-on-linux
-
 
 You can download Java 19 here: 
 https://www.oracle.com/java/technologies/downloads/#jdk19-linux
@@ -71,13 +66,12 @@ https://www.oracle.com/java/technologies/downloads/#jdk19-linux
 Or you may also download Java 19 onto your Linux-based computer with
 `wget --no-check-certificate -c --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/java/19/latest/jdk-19_linux-x64_bin.tar.gz`
 
-You may have to add "sudo" beofre the above command as well if you are using a virtual machine.
-
+You may have to add "sudo" before the above command as well if you are using a virtual machine.
 
 Next, navigate to where the JDK was downloaded and extract the contents. You may use the command:
 `sudo tar -xvzf ~/Downloads/jdk-19_linux-x64_bin.tar.gz`
 
-Next, set up your environment. Start by enteirng the command `sudo nano /etc/environment` to bring up your environment PATH and add `/usr/lib/jvm/jdk-19.0.1/bin`. PATH variable must be separated by a colon so be sure to add one to the beginning of the path if there are already variables present.
+Next, set up your environment. Start by entering the command `sudo nano /etc/environment` to bring up your environment PATH and add `/usr/lib/jvm/jdk-19.0.1/bin`. PATH variable must be separated by a colon so be sure to add one to the beginning of the path if there are already variables present.
 
 Note that the version of the Java 19 JDK you downloaded may be slightly different, in which case be sure to adjust your statements accordingly. For example you may need to add `/usr/lib/jvm/jdk-19.0.2/bin` to you PATH instead depending on if Java has updated their Java 19 JDK
 
@@ -111,7 +105,7 @@ If you see the version number then you have installed Java and set up your envir
 
 #### Download this project
 ```
-$ git clone https://github.com/MelissaData/PhoneObject-Java-Linux.git
+$ git clone https://github.com/MelissaData/PhoneObject-Java-Linux
 $ cd PhoneObject-Java-Linux
 ```
 
@@ -138,7 +132,6 @@ Melissa Updater is a CLI application allowing the user to update their Melissa a
 - Now that the Melissa Updater is set up, you can now proceed to move back into the project folder by using the command:
   
    `cd ..`
-
 
 ----------------------------------------
 
@@ -194,16 +187,12 @@ When you have modified the script to match your data location, let's run the scr
     ```
 This is the expected output from a successful setup for interactive mode:
 
-
 ![alt text](/screenshots/output.png)
-
     
 ## Troubleshooting
-
 Troubleshooting for errors found while running your program.
 
 ### Errors:
-
 | Error      | Description |
 | ----------- | ----------- |
 | ErrorRequiredFileNotFound      | Program is missing a required file. Please check your Data folder and refer to the list of required files above. If you are unable to obtain all required files through the Melissa Updater, please contact technical support below. |
@@ -211,9 +200,7 @@ Troubleshooting for errors found while running your program.
 | ErrorFoundOldFile   | File(s) are out of date. Please make sure you are downloading and using the latest release version. (If using the Melissa Updater, check powershell script for '$RELEASE_VERSION = {version}'  and change the release version if you are using an out of date release).    |
 | ErrorLicenseExpired   | Expired license string. Please contact technical support below. |
 
-
 ## Contact Us
-
 For free technical support, please call us at 800-MELISSA ext. 4
 (800-635-4772 ext. 4) or email us at tech@Melissa.com.
 
