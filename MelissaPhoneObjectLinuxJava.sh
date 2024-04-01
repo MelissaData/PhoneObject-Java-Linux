@@ -42,24 +42,17 @@ while [ $# -gt 0 ] ; do
 done
 
 # ######################### Config ###########################
-RELEASE_VERSION='2024.02'
+RELEASE_VERSION='2024.03'
 ProductName="DQ_PHONE_DATA"
 
 # Uses the location of the .sh file 
-# Modify this if you want to use 
 CurrentPath=$(pwd)
 ProjectPath="$CurrentPath/MelissaPhoneObjectLinuxJava"
-BuildPath="$ProjectPath"
-DataPath="$ProjectPath/Data"
 
-if [ ! -d $DataPath ];
+DataPath="$ProjectPath/Data" # To use your own data file(s), change to your DQS release data file(s) directory
+if [ ! -d "$DataPath" ] && [ "$DataPath" = "$ProjectPath/Data" ]; 
 then
-    mkdir $DataPath
-fi
-
-if [ ! -d $BuildPath ];
-then
-    mkdir $BuildPath
+  mkdir -p "$DataPath"
 fi
 
 # Config variables for download file(s)
@@ -189,7 +182,7 @@ DownloadWrappers()
 
 CheckSOs() 
 {
-    if [ ! -f $BuildPath/$Config_FileName ];
+    if [ ! -f $ProjectPath/$Config_FileName ];
     then
         echo "false"
     else
@@ -221,16 +214,7 @@ fi
 
 # Use Melissa Updater to download data file(s) 
 # Download data file(s) 
-DownloadDataFiles $license      # comment out this line if using DQS Release
-
-# Set data file(s) path
-#DataPath=""      # uncomment this line and change to your DQS Release data file(s) directory 
-
-#if [ ! -d $DataPath ]; # uncomment this section of code if you are using your own DQS Release data file(s) directory
-#then
-    #printf "\nData path is invalid!\n"
-    #exit 1
-#fi
+DownloadDataFiles $license # Comment out this line if using own DQS release
 
 # Download SO(s)
 DownloadSO $license 
